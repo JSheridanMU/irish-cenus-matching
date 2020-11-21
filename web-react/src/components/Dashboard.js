@@ -31,13 +31,13 @@ export default function Dashboard() {
     <React.Fragment>
       <Grid container spacing={4}>
         {/* Ratings Chart */}
-        <Grid item xs={12} md={8} lg={7}>
+        <Grid item xs={12} md={8} lg={9}>
           <Paper className={fixedHeightPaper}>
             <RatingsChart />
           </Paper>
         </Grid>
         {/* User Count */}
-        <Grid item xs={12} md={4} lg={5}>
+        <Grid item xs={12} md={4} lg={3}>
           <Paper className={fixedHeightPaper}>
             <UserCount />
           </Paper>

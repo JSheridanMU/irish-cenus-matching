@@ -17,7 +17,7 @@ import Title from './Title'
 
 const styles = (theme) => ({
   root: {
-    maxWidth: 700,
+    maxWidth: 1300,
     marginTop: theme.spacing(3),
     overflowX: 'auto',
     margin: 'auto',
@@ -36,14 +36,14 @@ const GET_USER = gql`
   query usersPaginateQuery(
     $first: Int
     $offset: Int
-    $orderBy: [_UserOrdering]
-    $filter: _UserFilter
+    $orderBy: [_PersonOrdering]
+    $filter: _PersonFilter
   ) {
-    User(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
-      id: userId
-      name
-      avgStars
-      numReviews
+    Person(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
+      id: _id
+      forename
+      surname #stars
+      age #reviews
     }
   }
 `
@@ -51,14 +51,14 @@ const GET_USER = gql`
 function UserList(props) {
   const { classes } = props
   const [order, setOrder] = React.useState('asc')
-  const [orderBy, setOrderBy] = React.useState('name')
+  const [orderBy, setOrderBy] = React.useState('forename')
   const [page] = React.useState(0)
-  const [rowsPerPage] = React.useState(10)
+  const [rowsPerPage] = React.useState(50)
   const [filterState, setFilterState] = React.useState({ usernameFilter: '' })
 
   const getFilter = () => {
     return filterState.usernameFilter.length > 0
-      ? { name_contains: filterState.usernameFilter }
+      ? { forename_contains: filterState.usernameFilter }
       : {}
   }
 
@@ -94,10 +94,10 @@ function UserList(props) {
 
   return (
     <Paper className={classes.root}>
-      <Title>User List</Title>
+      <Title>Person List</Title>
       <TextField
         id="search"
-        label="User Name Contains"
+        label="Forename Contains"
         className={classes.textField}
         value={filterState.usernameFilter}
         onChange={handleFilterChange('usernameFilter')}
@@ -115,60 +115,58 @@ function UserList(props) {
           <TableHead>
             <TableRow>
               <TableCell
-                key="name"
-                sortDirection={orderBy === 'name' ? order : false}
+                key="forename"
+                sortDirection={orderBy === 'forename' ? order : false}
               >
                 <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
                   <TableSortLabel
-                    active={orderBy === 'name'}
+                    active={orderBy === 'forename'}
                     direction={order}
-                    onClick={() => handleSortRequest('name')}
+                    onClick={() => handleSortRequest('forename')}
                   >
-                    Name
+                    Forename
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
               <TableCell
-                key="avgStars"
-                sortDirection={orderBy === 'avgStars' ? order : false}
+                key="surname"
+                sortDirection={orderBy === 'surname' ? order : false}
               >
                 <Tooltip title="Sort" placement="bottom-end" enterDelay={300}>
                   <TableSortLabel
-                    active={orderBy === 'avgStars'}
+                    active={orderBy === 'surname'}
                     direction={order}
-                    onClick={() => handleSortRequest('avgStars')}
+                    onClick={() => handleSortRequest('surname')}
                   >
-                    Average Stars
+                    Surname
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
               <TableCell
-                key="numReviews"
-                sortDirection={orderBy === 'numReviews' ? order : false}
+                key="age"
+                sortDirection={orderBy === 'age' ? order : false}
               >
                 <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
                   <TableSortLabel
-                    active={orderBy === 'numReviews'}
+                    active={orderBy === 'age'}
                     direction={order}
-                    onClick={() => handleSortRequest('numReviews')}
+                    onClick={() => handleSortRequest('age')}
                   >
-                    Number of Reviews
+                    Age
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.User.map((n) => {
+            {data.Person.map((n) => {
               return (
-                <TableRow key={n.id}>
+                <TableRow key={n._id}>
                   <TableCell component="th" scope="row">
-                    {n.name}
+                    {n.forename}
                   </TableCell>
-                  <TableCell>
-                    {n.avgStars ? n.avgStars.toFixed(2) : '-'}
-                  </TableCell>
-                  <TableCell>{n.numReviews}</TableCell>
+                  <TableCell>{n.surname}</TableCell>
+                  <TableCell>{n.age}</TableCell>
                 </TableRow>
               )
             })}
