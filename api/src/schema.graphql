@@ -4,7 +4,9 @@ type Person {
   birthplace: String!
   forename: String!
   household: String!
+  occupation: String!
   relationToHead: String!
+  religion: String!
   sex: String!
   surname: String!
   related_to: [Person] @relation(name: "RELATED_TO", direction: "OUT")
@@ -19,4 +21,5 @@ type RELATED_TO @relation(name: "RELATED_TO") {
 
 type Query {
   personCount: Int! @cypher(statement: "MATCH (p:Person) RETURN COUNT(p)")
+  relCount: Int! @cypher(statement: "MATCH (n)-[r]->() RETURN COUNT(r)")
 }

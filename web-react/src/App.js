@@ -27,7 +27,7 @@ import {
   ChevronLeft as ChevronLeftIcon,
   Menu as MenuIcon,
   Dashboard as DashboardIcon,
-  People as PeopleIcon,
+  Search as SearchIcon,
 } from '@material-ui/icons'
 import Dashboard from './components/Dashboard'
 
@@ -36,7 +36,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <MUILink color="inherit" href="https://grandstack.io/">
-        Your GRANDstack App Name Here
+        Irish Census Matching
       </MUILink>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -176,7 +176,7 @@ export default function App() {
               noWrap
               className={classes.title}
             >
-              Welcome To GRANDstack App
+              Irish Cenus Matching
             </Typography>
           </Toolbar>
         </AppBar>
@@ -206,9 +206,9 @@ export default function App() {
             <Link to="/users" className={classes.navLink}>
               <ListItem button>
                 <ListItemIcon>
-                  <PeopleIcon />
+                  <SearchIcon />
                 </ListItemIcon>
-                <ListItemText primary="Users" />
+                <ListItemText primary="Search" />
               </ListItem>
             </Link>
           </List>

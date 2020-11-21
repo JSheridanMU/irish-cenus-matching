@@ -9,18 +9,13 @@ import Title from './Title'
 
 const GET_RECENT_REVIEWS_QUERY = gql`
   {
-    Review(first: 10, orderBy: date_desc) {
-      user {
-        name
-      }
-      business {
-        name
-      }
-      date {
-        formatted
-      }
-      text
-      stars
+    Person(first: 10, orderBy: household_asc) {
+      id: _id
+      forename
+      surname
+      age
+      sex
+      religion
     }
   }
 `
@@ -32,25 +27,25 @@ export default function RecentReviews() {
 
   return (
     <React.Fragment>
-      <Title>Recent Reviews</Title>
+      <Title>People</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Business Name</TableCell>
-            <TableCell>User Name</TableCell>
-            <TableCell>Review Text</TableCell>
-            <TableCell align="right">Review Stars</TableCell>
+            <TableCell>Forename</TableCell>
+            <TableCell>Surname</TableCell>
+            <TableCell>Age</TableCell>
+            <TableCell>Sex</TableCell>
+            <TableCell align="right">Religion</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.Review.map((row) => (
+          {data.Person.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.date.formatted}</TableCell>
-              <TableCell>{row.business.name}</TableCell>
-              <TableCell>{row.user.name}</TableCell>
-              <TableCell>{row.text}</TableCell>
-              <TableCell align="right">{row.stars}</TableCell>
+              <TableCell>{row.forename}</TableCell>
+              <TableCell>{row.surname}</TableCell>
+              <TableCell>{row.age}</TableCell>
+              <TableCell>{row.sex}</TableCell>
+              <TableCell align="right">{row.religion}</TableCell>
             </TableRow>
           ))}
         </TableBody>

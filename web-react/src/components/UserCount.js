@@ -17,6 +17,7 @@ const useStyles = makeStyles({
 const GET_COUNT_QUERY = gql`
   {
     personCount
+    relCount
   }
 `
 
@@ -34,9 +35,15 @@ export default function Deposits() {
       <Typography color="textSecondary" className={classes.depositContext}>
         people found
       </Typography>
+      <Typography component="p" variant="h4">
+        {loading ? 'Loading...' : data.relCount}
+      </Typography>
+      <Typography color="textSecondary" className={classes.depositContext}>
+        relationships found
+      </Typography>
       <div>
         <Link to="/users" className={classes.navLink}>
-          View users
+          View people
         </Link>
       </div>
     </React.Fragment>
