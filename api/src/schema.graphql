@@ -20,6 +20,12 @@ type RELATED_TO @relation(name: "RELATED_TO") {
 }
 
 type Query {
-  personCount: Int! @cypher(statement: "MATCH (p:Person) RETURN COUNT(p)")
-  relCount: Int! @cypher(statement: "MATCH (n)-[r]->() RETURN COUNT(r)")
+  personCount(year: String): Int!
+    @cypher(
+      statement: "MATCH (p:Person) WHERE p.household CONTAINS $year RETURN COUNT(p)"
+    )
+  houseCount(year: String): Int!
+    @cypher(
+      statement: "MATCH (n) WHERE n.household CONTAINS $year RETURN count(DISTINCT n.household)"
+    )
 }
