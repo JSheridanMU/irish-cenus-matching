@@ -18,6 +18,7 @@ import Title from './Title'
 import clsx from 'clsx'
 
 import SearchResults from './SearchResults'
+import { UseSearch, Form } from './UseSearch'
 
 const initialValues = {
   year: '1901',
@@ -35,10 +36,6 @@ export default function Search() {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      '& .MuiFormControl-root': {
-        width: '80%',
-        margin: theme.spacing(1),
-      },
       display: 'flex',
     },
     paper: {
@@ -54,15 +51,7 @@ export default function Search() {
   const classes = useStyles(theme)
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
-  const [values, setValues] = useState(initialValues)
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setValues({
-      ...values,
-      [name]: value,
-    })
-  }
+  const { values, handleInputChange } = UseSearch(initialValues)
 
   return (
     <React.Fragment>
@@ -71,7 +60,7 @@ export default function Search() {
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={fixedHeightPaper}>
             <Title>Search</Title>
-            <form className={classes.root}>
+            <Form>
               <Grid container>
                 <Grid item xs={6}>
                   <FormControl>
@@ -175,7 +164,7 @@ export default function Search() {
                   />
                 </Grid>
               </Grid>
-            </form>
+            </Form>
           </Paper>
         </Grid>
       </Grid>
