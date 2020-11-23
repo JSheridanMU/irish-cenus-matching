@@ -2,13 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useTheme } from '@material-ui/core/styles'
 import {
   FormControl,
-  FormLabel,
   Grid,
   Paper,
-  RadioGroup,
   TextField,
-  Radio,
-  FormControlLabel,
   Select,
   InputLabel,
   MenuItem,
@@ -19,6 +15,7 @@ import clsx from 'clsx'
 
 import SearchResults from './SearchResults'
 import { UseSearch, Form } from './UseSearch'
+import FieldImporter from './form-fields/FieldImporter'
 
 const initialValues = {
   year: '1901',
@@ -30,6 +27,17 @@ const initialValues = {
   age: '',
   sex: 'both',
 }
+
+const sexValues = [
+  { id: 'male', title: 'Male' },
+  { id: 'female', title: 'Female' },
+  { id: 'both', title: 'Both' },
+]
+
+const yearValues = [
+  { id: '1901', title: '1901' },
+  { id: '1911', title: '1911' },
+]
 
 export default function Search() {
   const theme = useTheme()
@@ -63,65 +71,32 @@ export default function Search() {
             <Form>
               <Grid container>
                 <Grid item xs={6}>
-                  <FormControl>
-                    <FormLabel>Year</FormLabel>
-                    <RadioGroup
-                      row
-                      name="year"
-                      value={values.year}
-                      onChange={handleInputChange}
-                    >
-                      <FormControlLabel
-                        value="1901"
-                        control={<Radio />}
-                        label="1901"
-                      />
-                      <FormControlLabel
-                        value="1911"
-                        control={<Radio />}
-                        label="1911"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                  <TextField
-                    variant="outlined"
-                    label="Surname"
+                  <FieldImporter.RadioGroup
+                    label="Year"
+                    name="year"
+                    value={values.year}
+                    onChange={handleInputChange}
+                    items={yearValues}
+                  />
+                  <FieldImporter.Input
                     name="surname"
+                    label="Surname"
                     value={values.surname}
                     onChange={handleInputChange}
                   />
-                  <TextField
-                    variant="outlined"
+                  <FieldImporter.Input
                     label="Forename"
                     name="forename"
                     value={values.forename}
                     onChange={handleInputChange}
                   />
-                  <FormControl>
-                    <FormLabel>Sex</FormLabel>
-                    <RadioGroup
-                      row
-                      name="sex"
-                      value={values.sex}
-                      onChange={handleInputChange}
-                    >
-                      <FormControlLabel
-                        value="male"
-                        control={<Radio />}
-                        label="Male"
-                      />
-                      <FormControlLabel
-                        value="female"
-                        control={<Radio />}
-                        label="Female"
-                      />
-                      <FormControlLabel
-                        value="both"
-                        control={<Radio />}
-                        label="Both"
-                      />
-                    </RadioGroup>
-                  </FormControl>
+                  <FieldImporter.RadioGroup
+                    label="Sex"
+                    name="sex"
+                    value={values.sex}
+                    onChange={handleInputChange}
+                    items={sexValues}
+                  />
                   <TextField
                     variant="outlined"
                     label="Age"
@@ -148,15 +123,13 @@ export default function Search() {
                       <MenuItem value={'Wexford'}>Wexford</MenuItem>
                     </Select>
                   </FormControl>
-                  <TextField
-                    variant="outlined"
+                  <FieldImporter.Input
                     label="Townland/Street"
                     name="townland"
                     value={values.townland}
                     onChange={handleInputChange}
                   />
-                  <TextField
-                    variant="outlined"
+                  <FieldImporter.Input
                     label="DED"
                     name="ded"
                     value={values.ded}
