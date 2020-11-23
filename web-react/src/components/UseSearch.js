@@ -12,10 +12,15 @@ export function UseSearch(initialValues) {
     })
   }
 
+  const resetForm = () => {
+    setValues(initialValues)
+  }
+
   return {
     values,
     setValues,
     handleInputChange,
+    resetForm,
   }
 }
 

@@ -41,7 +41,7 @@ export default function Search() {
   const classes = useStyles(theme)
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
-  const { values, handleInputChange } = UseSearch(initialValues)
+  const { values, handleInputChange, resetForm } = UseSearch(initialValues)
 
   return (
     <React.Fragment>
@@ -53,12 +53,11 @@ export default function Search() {
             <Form>
               <Grid container>
                 <Grid item xs={6}>
-                  <FieldImporter.RadioGroup
-                    label="Year"
-                    name="year"
-                    value={values.year}
+                  <FieldImporter.Input
+                    label="Forename"
+                    name="forename"
+                    value={values.forename}
                     onChange={handleInputChange}
-                    items={DataService.getYears()}
                   />
                   <FieldImporter.Input
                     name="surname"
@@ -67,10 +66,11 @@ export default function Search() {
                     onChange={handleInputChange}
                   />
                   <FieldImporter.Input
-                    label="Forename"
-                    name="forename"
-                    value={values.forename}
+                    label="Age"
+                    name="age"
+                    value={values.age}
                     onChange={handleInputChange}
+                    type="number"
                   />
                   <FieldImporter.RadioGroup
                     label="Sex"
@@ -78,13 +78,6 @@ export default function Search() {
                     value={values.sex}
                     onChange={handleInputChange}
                     items={DataService.getSexes()}
-                  />
-                  <FieldImporter.Input
-                    label="Age"
-                    name="age"
-                    value={values.age}
-                    onChange={handleInputChange}
-                    isNumber={true}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -107,6 +100,21 @@ export default function Search() {
                     value={values.ded}
                     onChange={handleInputChange}
                   />
+                  <FieldImporter.RadioGroup
+                    label="Year"
+                    name="year"
+                    value={values.year}
+                    onChange={handleInputChange}
+                    items={DataService.getYears()}
+                  />
+                  <div>
+                    <FieldImporter.Button type="submit" text="Submit" />
+                    <FieldImporter.Button
+                      text="Reset"
+                      color="default"
+                      onClick={resetForm}
+                    />
+                  </div>
                 </Grid>
               </Grid>
             </Form>
