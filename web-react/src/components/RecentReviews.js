@@ -15,7 +15,11 @@ const GET_RECENT_REVIEWS_QUERY = gql`
       surname
       age
       sex
+      birthplace
+      occupation
       religion
+      relationToHead
+      household
     }
   }
 `
@@ -27,25 +31,33 @@ export default function RecentReviews() {
 
   return (
     <React.Fragment>
-      <Title>People</Title>
+      <Title>Data Format</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Forename</TableCell>
-            <TableCell>Surname</TableCell>
+            <TableCell>Name</TableCell>
             <TableCell>Age</TableCell>
             <TableCell>Sex</TableCell>
-            <TableCell align="right">Religion</TableCell>
+            <TableCell>Birthplace</TableCell>
+            <TableCell>Occupation</TableCell>
+            <TableCell>Religion</TableCell>
+            <TableCell>Relation to Head of Family</TableCell>
+            <TableCell>Year</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.Person.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.forename}</TableCell>
-              <TableCell>{row.surname}</TableCell>
+              <TableCell>{row.forename + ' ' + row.surname}</TableCell>
               <TableCell>{row.age}</TableCell>
               <TableCell>{row.sex}</TableCell>
-              <TableCell align="right">{row.religion}</TableCell>
+              <TableCell>{row.birthplace}</TableCell>
+              <TableCell>{row.occupation}</TableCell>
+              <TableCell>{row.religion}</TableCell>
+              <TableCell>{row.relationToHead}</TableCell>
+              <TableCell>
+                {row.household.includes('1911') ? '1911' : '1901'}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

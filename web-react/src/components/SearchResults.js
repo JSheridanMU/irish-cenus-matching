@@ -4,10 +4,7 @@ import { Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 
-import RatingsChart from './RatingsChart'
-import UserCount from './UserCount'
-import RecentReviews from './RecentReviews'
-export default function Dashboard() {
+export default function SearchResults() {
   const theme = useTheme()
 
   const useStyles = makeStyles((theme) => ({
@@ -30,27 +27,14 @@ export default function Dashboard() {
   return (
     <React.Fragment>
       <Grid container spacing={4}>
-        {/* Ratings Chart */}
-        <Grid item xs={12} md={8} lg={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <Paper className={fixedHeightPaper}>
-            <RatingsChart />
+            <p>First Year</p>
           </Paper>
         </Grid>
-        {/* User Count */}
-        <Grid item xs={12} md={4} lg={3}>
+        <Grid item xs={12} md={12} lg={6}>
           <Paper className={fixedHeightPaper}>
-            <UserCount year="1901" />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={4} lg={3}>
-          <Paper className={fixedHeightPaper}>
-            <UserCount year="1911" />
-          </Paper>
-        </Grid>
-        {/* Recent Reviews */}
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <RecentReviews />
+            <p>Second Year</p>
           </Paper>
         </Grid>
       </Grid>

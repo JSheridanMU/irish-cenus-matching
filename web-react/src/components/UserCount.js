@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Title from './Title'
@@ -15,37 +14,36 @@ const useStyles = makeStyles({
 })
 
 const GET_COUNT_QUERY = gql`
-  {
-    personCount
-    relCount
+  query getData($year: String) {
+    personCount(year: $year)
+    houseCount(year: $year)
   }
 `
 
-export default function Deposits() {
+export default function Deposits(props) {
   const classes = useStyles()
-
-  const { loading, error, data } = useQuery(GET_COUNT_QUERY)
+  console.log(props.year)
+  const { loading, error, data } = useQuery(GET_COUNT_QUERY, {
+    variables: {
+      year: '/' + props.year + '/',
+    },
+  })
   if (error) return <p>Error</p>
   return (
     <React.Fragment>
-      <Title>Total People</Title>
+      <Title>{props.year}</Title>
       <Typography component="p" variant="h4">
         {loading ? 'Loading...' : data.personCount}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        people found
+        people found in
       </Typography>
       <Typography component="p" variant="h4">
-        {loading ? 'Loading...' : data.relCount}
+        {loading ? 'Loading...' : data.houseCount}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        relationships found
+        households
       </Typography>
-      <div>
-        <Link to="/users" className={classes.navLink}>
-          View people
-        </Link>
-      </div>
     </React.Fragment>
   )
 }
