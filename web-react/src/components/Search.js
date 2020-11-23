@@ -1,14 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useTheme } from '@material-ui/core/styles'
-import {
-  FormControl,
-  Grid,
-  Paper,
-  TextField,
-  Select,
-  InputLabel,
-  MenuItem,
-} from '@material-ui/core'
+import { Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Title from './Title'
 import clsx from 'clsx'
@@ -16,6 +8,7 @@ import clsx from 'clsx'
 import SearchResults from './SearchResults'
 import { UseSearch, Form } from './UseSearch'
 import FieldImporter from './form-fields/FieldImporter'
+import * as DataService from '../services/DataService'
 
 const initialValues = {
   year: '1901',
@@ -27,17 +20,6 @@ const initialValues = {
   age: '',
   sex: 'both',
 }
-
-const sexValues = [
-  { id: 'male', title: 'Male' },
-  { id: 'female', title: 'Female' },
-  { id: 'both', title: 'Both' },
-]
-
-const yearValues = [
-  { id: '1901', title: '1901' },
-  { id: '1911', title: '1911' },
-]
 
 export default function Search() {
   const theme = useTheme()
@@ -76,7 +58,7 @@ export default function Search() {
                     name="year"
                     value={values.year}
                     onChange={handleInputChange}
-                    items={yearValues}
+                    items={DataService.getYears()}
                   />
                   <FieldImporter.Input
                     name="surname"
@@ -95,34 +77,24 @@ export default function Search() {
                     name="sex"
                     value={values.sex}
                     onChange={handleInputChange}
-                    items={sexValues}
+                    items={DataService.getSexes()}
                   />
-                  <TextField
-                    variant="outlined"
+                  <FieldImporter.Input
                     label="Age"
                     name="age"
-                    type="number"
                     value={values.age}
                     onChange={handleInputChange}
+                    isNumber={true}
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <FormControl variant="outlined">
-                    <InputLabel>County</InputLabel>
-                    <Select
-                      value={values.county}
-                      onChange={handleInputChange}
-                      label="County"
-                      name="county"
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={'Carlow'}>Carlow</MenuItem>
-                      <MenuItem value={'Dublin'}>Dublin</MenuItem>
-                      <MenuItem value={'Wexford'}>Wexford</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <FieldImporter.Select
+                    name="county"
+                    label="County"
+                    value={values.county}
+                    onChange={handleInputChange}
+                    options={DataService.getCounties()}
+                  />
                   <FieldImporter.Input
                     label="Townland/Street"
                     name="townland"
