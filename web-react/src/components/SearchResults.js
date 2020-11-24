@@ -60,7 +60,7 @@ export default function SearchResults(values) {
       flexDirection: 'column',
     },
     fixedHeight: {
-      height: 450,
+      height: 500,
     },
   }))
   const classes = useStyles(theme)
