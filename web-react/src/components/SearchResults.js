@@ -11,13 +11,25 @@ const GET_HOUSEHOLD = gql`
   query getHouseholds(
     $year: String
     $forename: String
+    $surname: String
+    $sex: String
     $age_lt: Int
     $age_gt: Int
+    $county: String
+    $ded: String
+    $townland: String
   ) {
     Person(
       filter: {
-        household_contains: $year
-        forename: $forename
+        AND: [
+          { household_contains: $year }
+          { household_contains: $county }
+          { household_contains: $ded }
+          { household_contains: $townland }
+        ]
+        forename_contains: $forename
+        surname_contains: $surname
+        sex: $sex
         age_lte: $age_lt
         age_gte: $age_gt
       }
@@ -80,7 +92,7 @@ export default function SearchResults(values) {
       flexDirection: 'column',
     },
     fixedHeight: {
-      height: 500,
+      height: 600,
     },
   }))
   const classes = useStyles(theme)
@@ -89,14 +101,34 @@ export default function SearchResults(values) {
   const { loading, data, error } = useQuery(GET_HOUSEHOLD, {
     variables: {
       year: '/' + values.values.year + '/',
-      forename: values.values.forename,
-      age_gt: parseInt(values.values.age) - 5,
-      age_lt: parseInt(values.values.age) + 5,
+      ...(values.values.forename !== '' && {
+        forename: values.values.forename,
+      }),
+      ...(values.values.surname !== '' && {
+        surname: values.values.surname,
+      }),
+      ...(values.values.sex !== 'both' && {
+        sex: values.values.sex,
+      }),
+      ...(values.values.age !== '' && {
+        age_gt: parseInt(values.values.age) - 5,
+        age_lt: parseInt(values.values.age) + 5,
+      }),
+      ...(values.values.county !== '' && {
+        county: '/' + values.values.county + '/',
+      }),
+      ...(values.values.county !== '' && {
+        ded: '/' + values.values.ded + '/',
+      }),
+      ...(values.values.county !== '' && {
+        townland: '/' + values.values.townland + '/',
+      }),
     },
   })
 
   return (
     <React.Fragment>
+      {console.log(values.values)}
       <Grid container spacing={4}>
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={fixedHeightPaper}>

@@ -5,8 +5,8 @@ export const getCounties = () => [
 ]
 
 export const getSexes = () => [
-  { id: 'male', title: 'Male' },
-  { id: 'female', title: 'Female' },
+  { id: 'M', title: 'Male' },
+  { id: 'F', title: 'Female' },
   { id: 'both', title: 'Both' },
 ]
 
