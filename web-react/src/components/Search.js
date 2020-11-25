@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useTheme } from '@material-ui/core/styles'
 import { Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -23,6 +23,7 @@ const initialValues = {
 
 export default function Search() {
   const theme = useTheme()
+  const [search, setSearch] = useState(false)
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,9 +44,12 @@ export default function Search() {
 
   const { values, handleInputChange, resetForm } = UseSearch(initialValues)
 
+  const handleSubmit = () => {
+    setSearch(true)
+  }
+
   return (
     <React.Fragment>
-      {console.log(values)}
       <Grid container spacing={4}>
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={fixedHeightPaper}>
@@ -108,7 +112,10 @@ export default function Search() {
                     items={DataService.getYears()}
                   />
                   <div>
-                    <FieldImporter.Button type="submit" text="Submit" />
+                    <FieldImporter.Button
+                      text="Submit"
+                      onClick={handleSubmit}
+                    />
                     <FieldImporter.Button
                       text="Reset"
                       color="default"
@@ -121,7 +128,7 @@ export default function Search() {
           </Paper>
         </Grid>
       </Grid>
-      <SearchResults></SearchResults>
+      {search ? <SearchResults values={values} /> : null}
     </React.Fragment>
   )
 }

@@ -10,6 +10,7 @@ type Person {
   sex: String!
   surname: String!
   related_to: [Person] @relation(name: "RELATED_TO", direction: "OUT")
+  related_from: [Person] @relation(name: "RELATED_TO", direction: "IN")
   RELATED_TO_rel: [RELATED_TO]
 }
 
@@ -27,5 +28,9 @@ type Query {
   houseCount(year: String): Int!
     @cypher(
       statement: "MATCH (n) WHERE n.household CONTAINS $year RETURN count(DISTINCT n.household)"
+    )
+  findFamilies(year: String, forename: String): [Person]
+    @cypher(
+      statement: "MATCH (n) WHERE n.forename = $forename AND n.household CONTAINS $year RETURN n"
     )
 }
