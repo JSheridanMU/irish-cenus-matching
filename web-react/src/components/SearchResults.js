@@ -128,7 +128,6 @@ export default function SearchResults(values) {
 
   return (
     <React.Fragment>
-      {console.log(values.values)}
       <Grid container spacing={4}>
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={fixedHeightPaper}>
