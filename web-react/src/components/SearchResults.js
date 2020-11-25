@@ -8,8 +8,20 @@ import { useQuery, gql } from '@apollo/client'
 import ResultsTable from './ResultsTable'
 
 const GET_HOUSEHOLD = gql`
-  query getHouseholds($year: String, $forename: String) {
-    Person(filter: { household_contains: $year, forename: $forename }) {
+  query getHouseholds(
+    $year: String
+    $forename: String
+    $age_lt: Int
+    $age_gt: Int
+  ) {
+    Person(
+      filter: {
+        household_contains: $year
+        forename: $forename
+        age_lte: $age_lt
+        age_gte: $age_gt
+      }
+    ) {
       id: _id
       forename
       surname
@@ -21,18 +33,26 @@ const GET_HOUSEHOLD = gql`
       occupation
       religion
       related_to {
+        id: _id
         forename
         surname
         age
         sex
         relationToHead
+        birthplace
+        occupation
+        religion
       }
       related_from {
+        id: _id
         forename
         surname
         age
         sex
         relationToHead
+        birthplace
+        occupation
+        religion
       }
       RELATED_TO_rel {
         from {
@@ -70,6 +90,8 @@ export default function SearchResults(values) {
     variables: {
       year: '/' + values.values.year + '/',
       forename: values.values.forename,
+      age_gt: parseInt(values.values.age) - 5,
+      age_lt: parseInt(values.values.age) + 5,
     },
   })
 

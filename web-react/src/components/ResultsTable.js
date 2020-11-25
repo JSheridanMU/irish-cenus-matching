@@ -6,8 +6,13 @@ import {
   TableHead,
   TableRow,
   TableContainer,
+  IconButton,
+  Box,
+  Collapse,
 } from '@material-ui/core'
 import FieldImporter from './form-fields/FieldImporter'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 
 function formatData(data) {
   let people = []
@@ -26,9 +31,89 @@ function formatData(data) {
       relationships: person.RELATED_TO_rel.from.concat(
         person.RELATED_TO_rel.to
       ),
+      id: person.id,
     })
   })
   return people
+}
+
+function Row(props) {
+  const { row } = props
+  const [open, setOpen] = React.useState(false)
+
+  return (
+    <React.Fragment>
+      <TableRow>
+        <TableCell component="th" scope="row">
+          {row.forename}
+        </TableCell>
+        <TableCell>{row.surname}</TableCell>
+        <TableCell>{row.age}</TableCell>
+        <TableCell>{row.sex}</TableCell>
+        <TableCell>{row.birthplace}</TableCell>
+        <TableCell>{row.occupation}</TableCell>
+        <TableCell>{row.religion}</TableCell>
+        <TableCell>{row.relationToHead}</TableCell>
+        <TableCell>
+          <FieldImporter.Button
+            text="Household"
+            color="primary"
+            onClick={(e) => {
+              e.preventDefault()
+              window.open(row.household, '_blank')
+            }}
+          />
+        </TableCell>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Forename</TableCell>
+                    <TableCell>Surname</TableCell>
+                    <TableCell>Age</TableCell>
+                    <TableCell>Sex</TableCell>
+                    <TableCell>Birthplace</TableCell>
+                    <TableCell>Occupation</TableCell>
+                    <TableCell>Religion</TableCell>
+                    <TableCell>Relation to Head</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {row.relatives.map((relative) => (
+                    <TableRow key={relative.id}>
+                      <TableCell component="th" scope="row">
+                        {relative.forename}
+                      </TableCell>
+                      <TableCell>{relative.surname}</TableCell>
+                      <TableCell>{relative.age}</TableCell>
+                      <TableCell>{relative.sex}</TableCell>
+                      <TableCell>{relative.birthplace}</TableCell>
+                      <TableCell>{relative.occupation}</TableCell>
+                      <TableCell>{relative.religion}</TableCell>
+                      <TableCell>{relative.relationToHead}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  )
 }
 
 export default function ResultsTable(props) {
@@ -39,44 +124,22 @@ export default function ResultsTable(props) {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell key="forename"> Forename</TableCell>
-                <TableCell key="surname"> Surname</TableCell>
-                <TableCell key="age"> Age</TableCell>
-                <TableCell key="sex"> Sex</TableCell>
-                <TableCell key="birthplace"> Birthplace</TableCell>
-                <TableCell key="occupation"> Occupation</TableCell>
-                <TableCell key="religion"> Religion</TableCell>
-                <TableCell key="relationToHead"> Relation to Head</TableCell>
-                <TableCell key="household"> Household</TableCell>
+                <TableCell>Forename</TableCell>
+                <TableCell>Surname</TableCell>
+                <TableCell>Age</TableCell>
+                <TableCell>Sex</TableCell>
+                <TableCell>Birthplace</TableCell>
+                <TableCell>Occupation</TableCell>
+                <TableCell>Religion</TableCell>
+                <TableCell>Relation to Head</TableCell>
+                <TableCell>Household</TableCell>
+                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
-              {formatData(props.data).map((n) => {
-                return (
-                  <TableRow key={n.id}>
-                    <TableCell component="th" scope="row">
-                      {n.forename}
-                    </TableCell>
-                    <TableCell>{n.surname}</TableCell>
-                    <TableCell>{n.age}</TableCell>
-                    <TableCell>{n.sex}</TableCell>
-                    <TableCell>{n.birthplace}</TableCell>
-                    <TableCell>{n.occupation}</TableCell>
-                    <TableCell>{n.religion}</TableCell>
-                    <TableCell>{n.relationToHead}</TableCell>
-                    <TableCell>
-                      <FieldImporter.Button
-                        text="Household"
-                        color="primary"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          window.open(n.household, '_blank')
-                        }}
-                      />
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
+              {formatData(props.data).map((row) => (
+                <Row key={row.id} row={row} />
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
