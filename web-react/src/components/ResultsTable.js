@@ -39,7 +39,7 @@ function formatData(data) {
 }
 
 function Row(props) {
-  const { row, firstSearch, searchTrigger } = props
+  const { row, ...other } = props
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -111,7 +111,7 @@ function Row(props) {
                   ))}
                 </TableBody>
               </Table>
-              {firstSearch ? (
+              {other.firstSearch ? (
                 <FieldImporter.Button
                   text={
                     row.household.includes('1911')
@@ -119,7 +119,7 @@ function Row(props) {
                       : 'Search 1911'
                   }
                   color="primary"
-                  onClick={searchTrigger}
+                  onClick={other.searchTrigger}
                 />
               ) : null}
             </Box>
@@ -131,14 +131,15 @@ function Row(props) {
 }
 
 export default function ResultsTable(props) {
+  const { data, loading, error, ...other } = props
   return (
     <React.Fragment>
-      {!props.data && props.loading && !props.error && (
+      {!data && loading && !error && (
         <Box m="auto">
           <CircularProgress />
         </Box>
       )}
-      {props.data && !props.loading && !props.error && (
+      {data && !loading && !error && (
         <TableContainer>
           <Table stickyHeader>
             <TableHead>
@@ -157,12 +158,7 @@ export default function ResultsTable(props) {
             </TableHead>
             <TableBody>
               {formatData(props.data).map((row) => (
-                <Row
-                  key={row.id}
-                  row={row}
-                  firstSearch={props.firstSearch}
-                  searchTrigger={props.searchTrigger}
-                />
+                <Row key={row.id} row={row} {...other} />
               ))}
             </TableBody>
           </Table>
