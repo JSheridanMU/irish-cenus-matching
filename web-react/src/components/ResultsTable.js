@@ -132,38 +132,42 @@ function Row(props) {
 
 export default function ResultsTable(props) {
   const { data, loading, error, ...other } = props
-  return (
-    <React.Fragment>
-      {!data && loading && !error && (
-        <Box m="auto">
-          <CircularProgress />
-        </Box>
-      )}
-      {data && !loading && !error && (
-        <TableContainer>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell>Forename</TableCell>
-                <TableCell>Surname</TableCell>
-                <TableCell>Age</TableCell>
-                <TableCell>Sex</TableCell>
-                <TableCell>Birthplace</TableCell>
-                <TableCell>Occupation</TableCell>
-                <TableCell>Religion</TableCell>
-                <TableCell>Relation to Head</TableCell>
-                <TableCell>Household</TableCell>
-                <TableCell />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {formatData(props.data).map((row) => (
-                <Row key={row.id} row={row} {...other} />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
-    </React.Fragment>
-  )
+  return data ? (
+    data.Person.length === 0 ? (
+      <React.Fragment>No Results</React.Fragment>
+    ) : (
+      <React.Fragment>
+        {!data && loading && !error && (
+          <Box m="auto">
+            <CircularProgress />
+          </Box>
+        )}
+        {data && !loading && !error && (
+          <TableContainer>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Forename</TableCell>
+                  <TableCell>Surname</TableCell>
+                  <TableCell>Age</TableCell>
+                  <TableCell>Sex</TableCell>
+                  <TableCell>Birthplace</TableCell>
+                  <TableCell>Occupation</TableCell>
+                  <TableCell>Religion</TableCell>
+                  <TableCell>Relation to Head</TableCell>
+                  <TableCell>Household</TableCell>
+                  <TableCell />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {formatData(props.data).map((row) => (
+                  <Row key={row.id} row={row} {...other} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </React.Fragment>
+    )
+  ) : null
 }
