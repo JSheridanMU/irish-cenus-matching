@@ -39,7 +39,7 @@ function formatData(data) {
 }
 
 function Row(props) {
-  const { row } = props
+  const { row, ...other } = props
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -111,6 +111,17 @@ function Row(props) {
                   ))}
                 </TableBody>
               </Table>
+              {other.firstSearch ? (
+                <FieldImporter.Button
+                  text={
+                    row.household.includes('1911')
+                      ? 'Search 1901'
+                      : 'Search 1911'
+                  }
+                  color="primary"
+                  onClick={other.searchTrigger}
+                />
+              ) : null}
             </Box>
           </Collapse>
         </TableCell>
@@ -120,38 +131,43 @@ function Row(props) {
 }
 
 export default function ResultsTable(props) {
-  return (
-    <React.Fragment>
-      {!props.data && props.loading && !props.error && (
-        <Box m="auto">
-          <CircularProgress />
-        </Box>
-      )}
-      {props.data && !props.loading && !props.error && (
-        <TableContainer>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell>Forename</TableCell>
-                <TableCell>Surname</TableCell>
-                <TableCell>Age</TableCell>
-                <TableCell>Sex</TableCell>
-                <TableCell>Birthplace</TableCell>
-                <TableCell>Occupation</TableCell>
-                <TableCell>Religion</TableCell>
-                <TableCell>Relation to Head</TableCell>
-                <TableCell>Household</TableCell>
-                <TableCell />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {formatData(props.data).map((row) => (
-                <Row key={row.id} row={row} />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
-    </React.Fragment>
-  )
+  const { data, loading, error, ...other } = props
+  return data ? (
+    data.Person.length === 0 ? (
+      <React.Fragment>No Results</React.Fragment>
+    ) : (
+      <React.Fragment>
+        {!data && loading && !error && (
+          <Box m="auto">
+            <CircularProgress />
+          </Box>
+        )}
+        {data && !loading && !error && (
+          <TableContainer>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Forename</TableCell>
+                  <TableCell>Surname</TableCell>
+                  <TableCell>Age</TableCell>
+                  <TableCell>Sex</TableCell>
+                  <TableCell>Birthplace</TableCell>
+                  <TableCell>Occupation</TableCell>
+                  <TableCell>Religion</TableCell>
+                  <TableCell>Relation to Head</TableCell>
+                  <TableCell>Household</TableCell>
+                  <TableCell />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {formatData(props.data).map((row) => (
+                  <Row key={row.id} row={row} {...other} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </React.Fragment>
+    )
+  ) : null
 }

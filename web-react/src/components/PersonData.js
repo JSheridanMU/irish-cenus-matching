@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow'
 import { useQuery, gql } from '@apollo/client'
 import Title from './Title'
 
-const GET_RECENT_REVIEWS_QUERY = gql`
+const GET_PERSON_DATA_QUERY = gql`
   {
     Person(first: 10, orderBy: household_asc) {
       id: _id
@@ -24,8 +24,8 @@ const GET_RECENT_REVIEWS_QUERY = gql`
   }
 `
 
-export default function RecentReviews() {
-  const { loading, error, data } = useQuery(GET_RECENT_REVIEWS_QUERY)
+export default function PersonData() {
+  const { loading, error, data } = useQuery(GET_PERSON_DATA_QUERY)
   if (error) return <p>Error</p>
   if (loading) return <p>Loading</p>
 
