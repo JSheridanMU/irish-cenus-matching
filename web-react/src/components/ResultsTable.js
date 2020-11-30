@@ -39,7 +39,7 @@ function formatData(data) {
 }
 
 function Row(props) {
-  const { row } = props
+  const { row, firstSearch, searchTrigger } = props
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -111,6 +111,17 @@ function Row(props) {
                   ))}
                 </TableBody>
               </Table>
+              {firstSearch ? (
+                <FieldImporter.Button
+                  text={
+                    row.household.includes('1911')
+                      ? 'Search 1901'
+                      : 'Search 1911'
+                  }
+                  color="primary"
+                  onClick={searchTrigger}
+                />
+              ) : null}
             </Box>
           </Collapse>
         </TableCell>
@@ -146,7 +157,12 @@ export default function ResultsTable(props) {
             </TableHead>
             <TableBody>
               {formatData(props.data).map((row) => (
-                <Row key={row.id} row={row} />
+                <Row
+                  key={row.id}
+                  row={row}
+                  firstSearch={props.firstSearch}
+                  searchTrigger={props.searchTrigger}
+                />
               ))}
             </TableBody>
           </Table>

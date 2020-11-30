@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import Title from './Title'
 import { useQuery, gql } from '@apollo/client'
 import ResultsTable from './ResultsTable'
+import { UseSecondSearch } from './UseSecondSearch'
 
 const GET_HOUSEHOLD = gql`
   query getHouseholds(
@@ -126,20 +127,30 @@ export default function SearchResults(values) {
     },
   })
 
+  const { secondSearch, handleSearchTrigger } = UseSecondSearch()
+
   return (
     <React.Fragment>
       <Grid container spacing={4}>
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={fixedHeightPaper}>
             <Title>{values.values.year}</Title>
-            <ResultsTable data={data} loading={loading} error={error} />
+            <ResultsTable
+              data={data}
+              loading={loading}
+              error={error}
+              firstSearch={!secondSearch}
+              searchTrigger={handleSearchTrigger}
+            />
           </Paper>
         </Grid>
-        {/* <Grid item xs={12} md={12} lg={6}>
-          <Paper className={fixedHeightPaper}>
-            <p>Second Year</p>
-          </Paper>
-        </Grid> */}
+        {secondSearch ? (
+          <Grid item xs={12} md={12} lg={12}>
+            <Paper className={fixedHeightPaper}>
+              <p>Second Year</p>
+            </Paper>
+          </Grid>
+        ) : null}
       </Grid>
     </React.Fragment>
   )
