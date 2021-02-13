@@ -22,7 +22,6 @@ const GET_COUNT_QUERY = gql`
 
 export default function Deposits(props) {
   const classes = useStyles()
-  console.log(props.year)
   const { loading, error, data } = useQuery(GET_COUNT_QUERY, {
     variables: {
       year: '/' + props.year + '/',

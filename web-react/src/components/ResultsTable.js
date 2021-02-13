@@ -42,6 +42,10 @@ function Row(props) {
   const { row, ...other } = props
   const [open, setOpen] = React.useState(false)
 
+  const trigger = () => {
+    other.searchTrigger(row)
+  }
+
   return (
     <React.Fragment>
       <TableRow>
@@ -119,7 +123,7 @@ function Row(props) {
                       : 'Search 1911'
                   }
                   color="primary"
-                  onClick={other.searchTrigger}
+                  onClick={trigger}
                 />
               ) : null}
             </Box>
