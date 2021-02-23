@@ -31,5 +31,8 @@
       "prettier --write",
       "eslint --fix"
     ]
+  },
+  "dependencies": {
+    "string-similarity": "^4.0.4"
   }
 }

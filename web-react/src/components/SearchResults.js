@@ -46,6 +46,7 @@ const GET_HOUSEHOLD = gql`
       birthplace
       occupation
       religion
+      soundex
       related_to {
         id: _id
         forename
@@ -56,6 +57,15 @@ const GET_HOUSEHOLD = gql`
         birthplace
         occupation
         religion
+        soundex
+        RELATED_TO_rel {
+          from {
+            name
+          }
+          to {
+            name
+          }
+        }
       }
       related_from {
         id: _id
@@ -67,6 +77,15 @@ const GET_HOUSEHOLD = gql`
         birthplace
         occupation
         religion
+        soundex
+        RELATED_TO_rel {
+          from {
+            name
+          }
+          to {
+            name
+          }
+        }
       }
       RELATED_TO_rel {
         from {
@@ -149,7 +168,11 @@ export default function SearchResults(values) {
           <Grid item xs={12} md={12} lg={12}>
             <Paper className={fixedHeightPaper}>
               <Title>{values.values.year === '1901' ? '1911' : '1901'}</Title>
-              <SecondSearchResults values={values.values} />
+              <SecondSearchResults
+                values={values.values}
+                relationships={secondSearch.relationships}
+                family={secondSearch.family}
+              />
             </Paper>
           </Grid>
         ) : null}
