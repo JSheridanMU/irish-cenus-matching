@@ -24,6 +24,7 @@ const GET_HOUSEHOLD = gql`
       birthplace
       occupation
       religion
+      soundex
       related_to {
         id: _id
         forename
@@ -34,6 +35,7 @@ const GET_HOUSEHOLD = gql`
         birthplace
         occupation
         religion
+        soundex
         RELATED_TO_rel {
           from {
             name
@@ -53,6 +55,7 @@ const GET_HOUSEHOLD = gql`
         birthplace
         occupation
         religion
+        soundex
         RELATED_TO_rel {
           from {
             name
@@ -85,7 +88,7 @@ export default function SearchResults(values) {
 
   return (
     <ResultsTable
-      data={orderData(data, values.relationships)}
+      data={orderData(data, values.relationships, values.family)}
       loading={loading}
       error={error}
     />

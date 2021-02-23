@@ -46,6 +46,7 @@ const GET_HOUSEHOLD = gql`
       birthplace
       occupation
       religion
+      soundex
       related_to {
         id: _id
         forename
@@ -56,6 +57,7 @@ const GET_HOUSEHOLD = gql`
         birthplace
         occupation
         religion
+        soundex
         RELATED_TO_rel {
           from {
             name
@@ -75,6 +77,7 @@ const GET_HOUSEHOLD = gql`
         birthplace
         occupation
         religion
+        soundex
         RELATED_TO_rel {
           from {
             name
@@ -167,7 +170,8 @@ export default function SearchResults(values) {
               <Title>{values.values.year === '1901' ? '1911' : '1901'}</Title>
               <SecondSearchResults
                 values={values.values}
-                relationships={secondSearch}
+                relationships={secondSearch.relationships}
+                family={secondSearch.family}
               />
             </Paper>
           </Grid>
