@@ -14,6 +14,7 @@ import {
 import FieldImporter from './form-fields/FieldImporter'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import Comparison from './Comparison'
 
 function formatData(data) {
   let people = []
@@ -85,7 +86,7 @@ function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Table>
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell>Forename</TableCell>
@@ -126,6 +127,9 @@ function Row(props) {
                   onClick={trigger}
                 />
               ) : null}
+              {other.secondSearch ? (
+                <Comparison original={other.query} new={row} />
+              ) : null}
             </Box>
           </Collapse>
         </TableCell>
@@ -136,6 +140,7 @@ function Row(props) {
 
 export default function ResultsTable(props) {
   const { data, loading, error, ...other } = props
+
   return data ? (
     data.Person.length === 0 ? (
       <React.Fragment>No Results</React.Fragment>
@@ -148,7 +153,7 @@ export default function ResultsTable(props) {
         )}
         {data && !loading && !error && (
           <TableContainer>
-            <Table stickyHeader>
+            <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>Forename</TableCell>

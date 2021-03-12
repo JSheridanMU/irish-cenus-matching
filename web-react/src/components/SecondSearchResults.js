@@ -78,19 +78,21 @@ const GET_HOUSEHOLD = gql`
 `
 const { orderData } = RankResults()
 
-export default function SearchResults(values) {
+export default function SearchResults(props) {
   const { loading, data, error } = useQuery(GET_HOUSEHOLD, {
     variables: {
-      year: values.values.year === '1911' ? '/1901/' : '/1911/',
-      relationships: values.relationships,
+      year: props.values.year === '1911' ? '/1901/' : '/1911/',
+      relationships: props.relationships,
     },
   })
 
   return (
     <ResultsTable
-      data={orderData(data, values.relationships, values.family)}
+      data={orderData(data, props.relationships, props.family)}
       loading={loading}
       error={error}
+      secondSearch={true}
+      query={props.family}
     />
   )
 }
