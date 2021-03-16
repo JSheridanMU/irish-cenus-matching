@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme } from '@material-ui/core/styles'
-import { Grid, Paper } from '@material-ui/core'
+import { Grid, Paper, Box, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 import Title from './Title'
@@ -155,6 +155,11 @@ export default function SearchResults(values) {
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={fixedHeightPaper}>
             <Title>{values.values.year}</Title>
+            {!data && loading && !error && (
+              <Box m="auto">
+                <CircularProgress />
+              </Box>
+            )}
             <ResultsTable
               data={data}
               loading={loading}

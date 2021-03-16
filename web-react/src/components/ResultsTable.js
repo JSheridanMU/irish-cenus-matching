@@ -9,7 +9,6 @@ import {
   IconButton,
   Box,
   Collapse,
-  CircularProgress,
 } from '@material-ui/core'
 import FieldImporter from './form-fields/FieldImporter'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
@@ -146,11 +145,6 @@ export default function ResultsTable(props) {
       <React.Fragment>No Results</React.Fragment>
     ) : (
       <React.Fragment>
-        {!data && loading && !error && (
-          <Box m="auto">
-            <CircularProgress />
-          </Box>
-        )}
         {data && !loading && !error && (
           <TableContainer>
             <Table stickyHeader size="small">

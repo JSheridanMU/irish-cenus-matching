@@ -2,6 +2,7 @@ import React from 'react'
 import { useQuery, gql } from '@apollo/client'
 import ResultsTable from './ResultsTable'
 import { RankResults } from './RankResults'
+import { Box, CircularProgress } from '@material-ui/core'
 
 const GET_HOUSEHOLD = gql`
   query getHouseholds($year: String, $relationships: [String!]) {
@@ -87,12 +88,19 @@ export default function SearchResults(props) {
   })
 
   return (
-    <ResultsTable
-      data={orderData(data, props.relationships, props.family)}
-      loading={loading}
-      error={error}
-      secondSearch={true}
-      query={props.family}
-    />
+    <React.Fragment>
+      {!data && loading && !error && (
+        <Box m="auto">
+          <CircularProgress />
+        </Box>
+      )}
+      <ResultsTable
+        data={orderData(data, props.relationships, props.family)}
+        loading={loading}
+        error={error}
+        secondSearch={true}
+        query={props.family}
+      />
+    </React.Fragment>
   )
 }
