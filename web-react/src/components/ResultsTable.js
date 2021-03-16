@@ -40,6 +40,7 @@ function formatData(data) {
         person.RELATED_TO_rel.to
       ),
       id: person.id,
+      soundex: person.soundex,
       ...points,
     })
   })
