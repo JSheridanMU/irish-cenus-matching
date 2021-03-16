@@ -9,9 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
 import Slide from '@material-ui/core/Slide'
-import { Grid, Paper } from '@material-ui/core'
-import Title from './Title'
-import clsx from 'clsx'
+import { Grid } from '@material-ui/core'
 import Visualisation from './Visualisation'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -32,19 +30,9 @@ export default function Comparison(props) {
       marginLeft: theme.spacing(2),
       flex: 1,
     },
-    paper: {
-      padding: theme.spacing(2),
-      display: 'flex',
-      overflow: 'auto',
-      flexDirection: 'column',
-    },
-    fixedHeight: {
-      height: 600,
-    },
   }))
 
   const classes = useStyles(theme)
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const [open, setOpen] = React.useState(false)
 
   const handleClickOpen = () => {
@@ -85,16 +73,16 @@ export default function Comparison(props) {
         </AppBar>
         <Grid container spacing={4}>
           <Grid item xs={12} md={12} lg={6}>
-            <Paper className={fixedHeightPaper}>
-              <Title>Original</Title>
-              <Visualisation household={props.original[0].household} />
-            </Paper>
+            <Visualisation
+              household={props.original[0].household}
+              title={'Original'}
+            />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
-            <Paper className={fixedHeightPaper}>
-              <Title>Potential Match</Title>
-              <Visualisation household={props.new.household} />
-            </Paper>
+            <Visualisation
+              household={props.new.household}
+              title={'Potential Match'}
+            />
           </Grid>
         </Grid>
       </Dialog>

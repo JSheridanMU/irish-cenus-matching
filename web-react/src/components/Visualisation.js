@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import neo4j from 'neo4j-driver/lib/browser/neo4j-web'
-import ForceGraph from './ForceGraph'
+import ForceGraphDisplay from './ForceGraphDisplay'
 
 export default function Visualisation(props) {
-  const { household } = props
+  const { household, title } = props
   const [nodeData, setNodeData] = useState(null)
   const [linkData, setLinkData] = useState(null)
 
@@ -42,7 +42,11 @@ export default function Visualisation(props) {
   return (
     <React.Fragment>
       {nodeData && linkData ? (
-        <ForceGraph nodeData={nodeData} linkData={linkData} />
+        <ForceGraphDisplay
+          nodeData={nodeData}
+          linkData={linkData}
+          title={title}
+        />
       ) : null}
     </React.Fragment>
   )
