@@ -19,6 +19,12 @@ import Comparison from './Comparison'
 function formatData(data) {
   let people = []
   data.Person.forEach((person) => {
+    let points = null
+    if (person.points) {
+      points = {
+        points: Math.round(person.points * 100) / 100,
+      }
+    }
     people.push({
       age: person.age,
       birthplace: person.birthplace,
@@ -34,6 +40,7 @@ function formatData(data) {
         person.RELATED_TO_rel.to
       ),
       id: person.id,
+      ...points,
     })
   })
   return people
@@ -60,6 +67,7 @@ function Row(props) {
         <TableCell>{row.occupation}</TableCell>
         <TableCell>{row.religion}</TableCell>
         <TableCell>{row.relationToHead}</TableCell>
+        {row.points ? <TableCell>{row.points}</TableCell> : null}
         <Tooltip
           title="View the original household return form"
           placement="top"
@@ -188,13 +196,21 @@ export default function ResultsTable(props) {
                     title="Year of Birth is estimated with age and year"
                     placement="top"
                   >
-                    <TableCell>Year of Birth</TableCell>
+                    <TableCell>Birthyear</TableCell>
                   </Tooltip>
                   <TableCell>Sex</TableCell>
                   <TableCell>Birthplace</TableCell>
                   <TableCell>Occupation</TableCell>
                   <TableCell>Religion</TableCell>
                   <TableCell>Relation to Head</TableCell>
+                  {data.Person[0].points ? (
+                    <Tooltip
+                      title="The household matching score used to rank potential matches"
+                      placement="top"
+                    >
+                      <TableCell>Points</TableCell>
+                    </Tooltip>
+                  ) : null}
                   <TableCell>Household</TableCell>
                   <TableCell />
                 </TableRow>
