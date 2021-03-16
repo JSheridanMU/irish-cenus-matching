@@ -11,7 +11,7 @@ import FieldImporter from './form-fields/FieldImporter'
 import * as DataService from '../services/DataService'
 
 const initialValues = {
-  year: '1901',
+  year: '1911',
   forename: '',
   surname: '',
   county: '',
