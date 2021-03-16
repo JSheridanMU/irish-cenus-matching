@@ -132,8 +132,8 @@ export default function SearchResults(values) {
         sex: values.values.sex,
       }),
       ...(values.values.age !== '' && {
-        age_gt: parseInt(values.values.age) - 5,
-        age_lt: parseInt(values.values.age) + 5,
+        age_gt: parseInt(values.values.year) - parseInt(values.values.age) - 5,
+        age_lt: parseInt(values.values.year) - parseInt(values.values.age) + 5,
       }),
       ...(values.values.county !== '' && {
         county: '/' + values.values.county + '/',
