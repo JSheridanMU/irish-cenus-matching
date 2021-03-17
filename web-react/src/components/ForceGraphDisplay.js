@@ -44,7 +44,11 @@ export default function ForceGraphDisplay(props) {
         <Grid container spacing={4}>
           <Grid item xs={12} md={12} lg={12}>
             <Paper className={graphHeightPaper}>
-              <Title>{title}</Title>
+              {nodeData[0].properties.household.includes('/1901') ? (
+                <Title>1901 {title}</Title>
+              ) : (
+                <Title>1911 {title}</Title>
+              )}
               <ForceGraph
                 nodeData={nodeData}
                 linkData={linkData}

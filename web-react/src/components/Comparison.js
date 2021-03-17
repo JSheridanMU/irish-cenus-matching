@@ -26,6 +26,10 @@ export default function Comparison(props) {
     appBar: {
       position: 'relative',
     },
+    gridContainer: {
+      margin: 0,
+      width: '100%',
+    },
     title: {
       marginLeft: theme.spacing(2),
       flex: 1,
@@ -71,7 +75,7 @@ export default function Comparison(props) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} className={classes.gridContainer}>
           <Grid item xs={12} md={12} lg={6}>
             <Visualisation
               household={props.original[0].household}
