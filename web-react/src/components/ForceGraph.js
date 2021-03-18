@@ -67,7 +67,7 @@ export default function ForceGraph(props) {
           )
           ctx.textAlign = 'center'
           ctx.textBaseline = 'middle'
-          ctx.fillStyle = 'blue'
+          ctx.fillStyle = node.colour
           ctx.fillText(label, node.x, node.y)
           node.__bckgDimensions = bckgDimensions
         }}

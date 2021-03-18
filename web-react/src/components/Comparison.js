@@ -16,6 +16,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
 })
 
+const formatHousehold = (household) => {
+  const output = [household]
+  household.relatives.forEach((relative) => {
+    output.push(relative)
+  })
+  return output
+}
+
 export default function Comparison(props) {
   const theme = useTheme()
 
@@ -79,12 +87,14 @@ export default function Comparison(props) {
           <Grid item xs={12} md={12} lg={6}>
             <Visualisation
               household={props.original[0].household}
+              comparison={formatHousehold(props.new)}
               title={'Original'}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Visualisation
               household={props.new.household}
+              comparison={props.original}
               title={'Potential Match'}
             />
           </Grid>
