@@ -41,6 +41,7 @@ function formatData(data) {
       ),
       id: person.id,
       soundex: person.soundex,
+      hisco: person.hisco,
       ...points,
     })
   })

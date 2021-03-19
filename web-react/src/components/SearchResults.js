@@ -47,6 +47,7 @@ const GET_HOUSEHOLD = gql`
       occupation
       religion
       soundex
+      hisco
       related_to {
         id: _id
         forename
@@ -58,6 +59,7 @@ const GET_HOUSEHOLD = gql`
         occupation
         religion
         soundex
+        hisco
         RELATED_TO_rel {
           from {
             name
@@ -78,6 +80,7 @@ const GET_HOUSEHOLD = gql`
         occupation
         religion
         soundex
+        hisco
         RELATED_TO_rel {
           from {
             name
