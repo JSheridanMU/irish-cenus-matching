@@ -36,7 +36,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <MUILink color="inherit" href="https://grandstack.io/">
-        Irish Census Matching
+        Irish Census Household Matching
       </MUILink>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -176,7 +176,7 @@ export default function App() {
               noWrap
               className={classes.title}
             >
-              Irish Cenus Matching
+              Irish Census Household Matching
             </Typography>
           </Toolbar>
         </AppBar>

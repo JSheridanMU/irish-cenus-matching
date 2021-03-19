@@ -10,6 +10,7 @@ type Person {
   sex: String!
   surname: String!
   soundex: String!
+  hisco: Int
   related_to: [Person] @relation(name: "RELATED_TO", direction: "OUT")
   related_from: [Person] @relation(name: "RELATED_TO", direction: "IN")
   RELATED_TO_rel: [RELATED_TO]
