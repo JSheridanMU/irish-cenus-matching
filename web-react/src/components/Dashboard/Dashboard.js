@@ -4,8 +4,8 @@ import { Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 
-import PersonCount from './PersonCount'
-import PersonData from './PersonData'
+import PersonCount from '../PersonCount/PersonCount'
+import PersonData from '../PersonData/PersonData'
 export default function Dashboard() {
   const theme = useTheme()
 

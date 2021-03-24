@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
-import Search from './components/Search'
+import Search from './components/Search/Search'
 
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
@@ -29,7 +29,7 @@ import {
   Dashboard as DashboardIcon,
   Search as SearchIcon,
 } from '@material-ui/icons'
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/Dashboard/Dashboard'
 
 function Copyright() {
   return (

@@ -10,11 +10,11 @@ import {
   Box,
   Collapse,
 } from '@material-ui/core'
-import FieldImporter from './form-fields/FieldImporter'
+import FieldImporter from '../form-fields/FieldImporter'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import Tooltip from '@material-ui/core/Tooltip'
-import Comparison from './Comparison'
+import Comparison from '../Comparison/Comparison'
 
 function formatData(data) {
   let people = []

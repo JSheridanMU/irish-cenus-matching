@@ -1,5 +1,5 @@
 import React from 'react'
-import FieldImporter from './form-fields/FieldImporter'
+import FieldImporter from '../form-fields/FieldImporter'
 import { useTheme } from '@material-ui/core/styles'
 import { makeStyles } from '@material-ui/core/styles'
 import Dialog from '@material-ui/core/Dialog'
@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
 import Slide from '@material-ui/core/Slide'
 import { Grid } from '@material-ui/core'
-import Visualisation from './Visualisation'
+import Visualisation from '../Visualisation/Visualisation'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
