@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme } from '@material-ui/core/styles'
-import { Grid, Paper } from '@material-ui/core'
+import { Grid, Paper, Box, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 import Title from './Title'
@@ -47,6 +47,7 @@ const GET_HOUSEHOLD = gql`
       occupation
       religion
       soundex
+      hisco
       related_to {
         id: _id
         forename
@@ -58,6 +59,7 @@ const GET_HOUSEHOLD = gql`
         occupation
         religion
         soundex
+        hisco
         RELATED_TO_rel {
           from {
             name
@@ -78,6 +80,7 @@ const GET_HOUSEHOLD = gql`
         occupation
         religion
         soundex
+        hisco
         RELATED_TO_rel {
           from {
             name
@@ -99,7 +102,7 @@ const GET_HOUSEHOLD = gql`
   }
 `
 
-export default function SearchResults(values) {
+export default function SearchResults(props) {
   const theme = useTheme()
 
   const useStyles = makeStyles((theme) => ({
@@ -121,28 +124,28 @@ export default function SearchResults(values) {
 
   const { loading, data, error } = useQuery(GET_HOUSEHOLD, {
     variables: {
-      year: '/' + values.values.year + '/',
-      ...(values.values.forename !== '' && {
-        forename: values.values.forename,
+      year: '/' + props.values.year + '/',
+      ...(props.values.forename !== '' && {
+        forename: props.values.forename,
       }),
-      ...(values.values.surname !== '' && {
-        surname: values.values.surname,
+      ...(props.values.surname !== '' && {
+        surname: props.values.surname,
       }),
-      ...(values.values.sex !== 'both' && {
-        sex: values.values.sex,
+      ...(props.values.sex !== 'both' && {
+        sex: props.values.sex,
       }),
-      ...(values.values.age !== '' && {
-        age_gt: parseInt(values.values.age) - 5,
-        age_lt: parseInt(values.values.age) + 5,
+      ...(props.values.age !== '' && {
+        age_gt: parseInt(props.values.year) - parseInt(props.values.age) - 5,
+        age_lt: parseInt(props.values.year) - parseInt(props.values.age) + 5,
       }),
-      ...(values.values.county !== '' && {
-        county: '/' + values.values.county + '/',
+      ...(props.values.county !== '' && {
+        county: '/' + props.values.county + '/',
       }),
-      ...(values.values.county !== '' && {
-        ded: '/' + values.values.ded + '/',
+      ...(props.values.county !== '' && {
+        ded: '/' + props.values.ded + '/',
       }),
-      ...(values.values.county !== '' && {
-        townland: '/' + values.values.townland + '/',
+      ...(props.values.county !== '' && {
+        townland: '/' + props.values.townland + '/',
       }),
     },
   })
@@ -154,7 +157,12 @@ export default function SearchResults(values) {
       <Grid container spacing={4}>
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={fixedHeightPaper}>
-            <Title>{values.values.year}</Title>
+            <Title>{props.values.year}</Title>
+            {!data && loading && !error && (
+              <Box m="auto">
+                <CircularProgress />
+              </Box>
+            )}
             <ResultsTable
               data={data}
               loading={loading}
@@ -167,9 +175,9 @@ export default function SearchResults(values) {
         {secondSearch ? (
           <Grid item xs={12} md={12} lg={12}>
             <Paper className={fixedHeightPaper}>
-              <Title>{values.values.year === '1901' ? '1911' : '1901'}</Title>
+              <Title>{props.values.year === '1901' ? '1911' : '1901'}</Title>
               <SecondSearchResults
-                values={values.values}
+                values={props.values}
                 relationships={secondSearch.relationships}
                 family={secondSearch.family}
               />

@@ -2,6 +2,7 @@ import React from 'react'
 import { useQuery, gql } from '@apollo/client'
 import ResultsTable from './ResultsTable'
 import { RankResults } from './RankResults'
+import { Box, CircularProgress } from '@material-ui/core'
 
 const GET_HOUSEHOLD = gql`
   query getHouseholds($year: String, $relationships: [String!]) {
@@ -25,6 +26,7 @@ const GET_HOUSEHOLD = gql`
       occupation
       religion
       soundex
+      hisco
       related_to {
         id: _id
         forename
@@ -36,6 +38,7 @@ const GET_HOUSEHOLD = gql`
         occupation
         religion
         soundex
+        hisco
         RELATED_TO_rel {
           from {
             name
@@ -56,6 +59,7 @@ const GET_HOUSEHOLD = gql`
         occupation
         religion
         soundex
+        hisco
         RELATED_TO_rel {
           from {
             name
@@ -78,19 +82,28 @@ const GET_HOUSEHOLD = gql`
 `
 const { orderData } = RankResults()
 
-export default function SearchResults(values) {
+export default function SearchResults(props) {
   const { loading, data, error } = useQuery(GET_HOUSEHOLD, {
     variables: {
-      year: values.values.year === '1911' ? '/1901/' : '/1911/',
-      relationships: values.relationships,
+      year: props.values.year === '1911' ? '/1901/' : '/1911/',
+      relationships: props.relationships,
     },
   })
 
   return (
-    <ResultsTable
-      data={orderData(data, values.relationships, values.family)}
-      loading={loading}
-      error={error}
-    />
+    <React.Fragment>
+      {!data && loading && !error && (
+        <Box m="auto">
+          <CircularProgress />
+        </Box>
+      )}
+      <ResultsTable
+        data={orderData(data, props.relationships, props.family)}
+        loading={loading}
+        error={error}
+        secondSearch={true}
+        query={props.family}
+      />
+    </React.Fragment>
   )
 }

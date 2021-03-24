@@ -9,15 +9,22 @@ import {
   IconButton,
   Box,
   Collapse,
-  CircularProgress,
 } from '@material-ui/core'
 import FieldImporter from './form-fields/FieldImporter'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import Tooltip from '@material-ui/core/Tooltip'
+import Comparison from './Comparison'
 
 function formatData(data) {
   let people = []
   data.Person.forEach((person) => {
+    let points = null
+    if (person.points) {
+      points = {
+        points: Math.round(person.points * 100) / 100,
+      }
+    }
     people.push({
       age: person.age,
       birthplace: person.birthplace,
@@ -33,6 +40,9 @@ function formatData(data) {
         person.RELATED_TO_rel.to
       ),
       id: person.id,
+      soundex: person.soundex,
+      hisco: person.hisco,
+      ...points,
     })
   })
   return people
@@ -59,16 +69,22 @@ function Row(props) {
         <TableCell>{row.occupation}</TableCell>
         <TableCell>{row.religion}</TableCell>
         <TableCell>{row.relationToHead}</TableCell>
-        <TableCell>
-          <FieldImporter.Button
-            text="Household"
-            color="primary"
-            onClick={(e) => {
-              e.preventDefault()
-              window.open(row.household, '_blank')
-            }}
-          />
-        </TableCell>
+        {row.points ? <TableCell>{row.points}</TableCell> : null}
+        <Tooltip
+          title="View the original household return form"
+          placement="top"
+        >
+          <TableCell>
+            <FieldImporter.Button
+              text="Household"
+              color="primary"
+              onClick={(e) => {
+                e.preventDefault()
+                window.open(row.household, '_blank')
+              }}
+            />
+          </TableCell>
+        </Tooltip>
         <TableCell>
           {!row.relatives.length ? null : (
             <IconButton
@@ -82,15 +98,15 @@ function Row(props) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Table>
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell>Forename</TableCell>
                     <TableCell>Surname</TableCell>
-                    <TableCell>Age</TableCell>
+                    <TableCell>Year of Birth</TableCell>
                     <TableCell>Sex</TableCell>
                     <TableCell>Birthplace</TableCell>
                     <TableCell>Occupation</TableCell>
@@ -99,6 +115,18 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
+                  <TableRow>
+                    <TableCell component="th" scope="row">
+                      {row.forename}
+                    </TableCell>
+                    <TableCell>{row.surname}</TableCell>
+                    <TableCell>{row.age}</TableCell>
+                    <TableCell>{row.sex}</TableCell>
+                    <TableCell>{row.birthplace}</TableCell>
+                    <TableCell>{row.occupation}</TableCell>
+                    <TableCell>{row.religion}</TableCell>
+                    <TableCell>{row.relationToHead}</TableCell>
+                  </TableRow>
                   {row.relatives.map((relative) => (
                     <TableRow key={relative.id}>
                       <TableCell component="th" scope="row">
@@ -116,15 +144,32 @@ function Row(props) {
                 </TableBody>
               </Table>
               {other.firstSearch ? (
-                <FieldImporter.Button
-                  text={
+                <Tooltip
+                  title={
                     row.household.includes('1911')
-                      ? 'Search 1901'
-                      : 'Search 1911'
+                      ? 'Trigger a search of this household in 1901'
+                      : 'Trigger a search of this household in 1911'
                   }
-                  color="primary"
-                  onClick={trigger}
-                />
+                  placement="right"
+                >
+                  <FieldImporter.Button
+                    text={
+                      row.household.includes('1911')
+                        ? 'Search 1901'
+                        : 'Search 1911'
+                    }
+                    color="primary"
+                    onClick={trigger}
+                  />
+                </Tooltip>
+              ) : null}
+              {other.secondSearch ? (
+                <Tooltip
+                  title="Open a graph visualisation of both households for comparisson"
+                  placement="right"
+                >
+                  <Comparison original={other.query} new={row} />
+                </Tooltip>
               ) : null}
             </Box>
           </Collapse>
@@ -136,29 +181,38 @@ function Row(props) {
 
 export default function ResultsTable(props) {
   const { data, loading, error, ...other } = props
+
   return data ? (
     data.Person.length === 0 ? (
       <React.Fragment>No Results</React.Fragment>
     ) : (
       <React.Fragment>
-        {!data && loading && !error && (
-          <Box m="auto">
-            <CircularProgress />
-          </Box>
-        )}
         {data && !loading && !error && (
           <TableContainer>
-            <Table stickyHeader>
+            <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>Forename</TableCell>
                   <TableCell>Surname</TableCell>
-                  <TableCell>Age</TableCell>
+                  <Tooltip
+                    title="Year of Birth is estimated with age and year"
+                    placement="top"
+                  >
+                    <TableCell>Birthyear</TableCell>
+                  </Tooltip>
                   <TableCell>Sex</TableCell>
                   <TableCell>Birthplace</TableCell>
                   <TableCell>Occupation</TableCell>
                   <TableCell>Religion</TableCell>
                   <TableCell>Relation to Head</TableCell>
+                  {data.Person[0].points ? (
+                    <Tooltip
+                      title="The household matching score used to rank potential matches"
+                      placement="top"
+                    >
+                      <TableCell>Points</TableCell>
+                    </Tooltip>
+                  ) : null}
                   <TableCell>Household</TableCell>
                   <TableCell />
                 </TableRow>

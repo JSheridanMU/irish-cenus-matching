@@ -1,6 +1,6 @@
 type Person {
-  _id: Long!
-  age: Int!
+  _id: Long! # id assigned automatticly by neo4j
+  age: Int! # age stored estimated birthyear
   birthplace: String!
   forename: String!
   household: String!
@@ -9,29 +9,27 @@ type Person {
   religion: String!
   sex: String!
   surname: String!
-  soundex: String!
-  related_to: [Person] @relation(name: "RELATED_TO", direction: "OUT")
-  related_from: [Person] @relation(name: "RELATED_TO", direction: "IN")
-  RELATED_TO_rel: [RELATED_TO]
+  soundex: String! # phonetic code generated from forenmae and surname
+  hisco: Int # occupation code
+  related_to: [Person] @relation(name: "RELATED_TO", direction: "OUT") # array of people this person is realted to
+  related_from: [Person] @relation(name: "RELATED_TO", direction: "IN") # array of people this person is realted from
+  RELATED_TO_rel: [RELATED_TO] # array of all relationships that this person is a part of
 }
 
 type RELATED_TO @relation(name: "RELATED_TO") {
-  from: Person!
-  to: Person!
-  name: String!
+  from: Person! # person that the relationship is from
+  to: Person! # person that the relationship is to
+  name: String! # name property containing soundex codes and age difference
+  type: String! # type of relationship containing the role pair
 }
 
 type Query {
-  personCount(year: String): Int!
+  personCount(year: String): Int!  # cypher query to count unique people in the database
     @cypher(
       statement: "MATCH (p:Person) WHERE p.household CONTAINS $year RETURN COUNT(p)"
     )
-  houseCount(year: String): Int!
+  houseCount(year: String): Int!  # cypher query to count unique households in the database
     @cypher(
-      statement: "MATCH (n) WHERE n.household CONTAINS $year RETURN count(DISTINCT n.household)"
-    )
-  findFamilies(year: String, forename: String): [Person]
-    @cypher(
-      statement: "MATCH (n) WHERE n.forename = $forename AND n.household CONTAINS $year RETURN n"
+      statement: "MATCH (p:Person) WHERE p.household CONTAINS $year RETURN count(DISTINCT p.household)"
     )
 }

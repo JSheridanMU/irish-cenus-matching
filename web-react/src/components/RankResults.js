@@ -1,3 +1,9 @@
+import { MatchPerson } from './MatchPerson'
+
+const RELATIONSHIP_VALUE = 6
+const MATCHING_THRESHOLD = 5.1
+const { match } = MatchPerson()
+
 const pruneData = (input) => {
   let output = []
   let households = []
@@ -36,75 +42,13 @@ const matchRelationships = (data, relationships) => {
     })
 
     const countObject = {
-      points: relationships.reduce((a, c) => a + nameArray.includes(c), 0),
+      points:
+        relationships.reduce((a, c) => a + nameArray.includes(c), 0) *
+        RELATIONSHIP_VALUE,
     }
     unorderedData.push(Object.assign(countObject, family))
   })
   return unorderedData
-}
-
-const diff = (a, b) => {
-  const differnece = a > b ? a - b : b - a
-  return differnece <= 10 ? true : false
-}
-
-const matchAge = (target, query) => {
-  let points = 0
-
-  query.forEach((person) => {
-    if (person.soundex === target.soundex && diff(person.age, target.age)) {
-      points += 1
-    } else {
-      target.related_from.forEach((relation) => {
-        if (
-          person.soundex === relation.soundex &&
-          diff(person.age, relation.age)
-        ) {
-          points += 1
-        }
-      })
-      target.related_to.forEach((relation) => {
-        if (
-          person.soundex === relation.soundex &&
-          diff(person.age, relation.age)
-        ) {
-          console.log(diff(relation.age, target.age))
-          points += 1
-        }
-      })
-    }
-  })
-
-  return points
-}
-
-const matchString = (target, query, value) => {
-  const stringSimilarity = require('string-similarity')
-  let points = 0
-
-  query.forEach((person) => {
-    if (person.soundex === target.soundex) {
-      points += stringSimilarity.compareTwoStrings(person[value], target[value])
-    } else {
-      target.related_from.forEach((relation) => {
-        if (person.soundex === relation.soundex) {
-          points += stringSimilarity.compareTwoStrings(
-            relation[value],
-            target[value]
-          )
-        }
-      })
-      target.related_to.forEach((relation) => {
-        if (person.soundex === relation.soundex) {
-          points += stringSimilarity.compareTwoStrings(
-            relation[value],
-            target[value]
-          )
-        }
-      })
-    }
-  })
-  return points
 }
 
 const orderData = (data, relationships, family) => {
@@ -113,10 +57,34 @@ const orderData = (data, relationships, family) => {
     const unorderedData = matchRelationships(data, relationships)
 
     unorderedData.forEach((target) => {
-      target.points += matchString(target, family, 'religion')
-      target.points += matchString(target, family, 'birthplace') * 2
-      target.points += matchString(target, family, 'occupation')
-      target.points += matchAge(target, family) * 2
+      let bestMatch = 0
+      family.forEach((queryPerson) => {
+        let matchScore = match(target, queryPerson)
+        if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
+          bestMatch = matchScore
+        }
+      })
+      target.points += bestMatch
+      target.related_from.forEach((relation) => {
+        bestMatch = 0
+        family.forEach((queryPerson) => {
+          let matchScore = match(relation, queryPerson)
+          if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
+            bestMatch = matchScore
+          }
+        })
+        target.points += bestMatch
+      })
+      target.related_to.forEach((relation) => {
+        bestMatch = 0
+        family.forEach((queryPerson) => {
+          let matchScore = match(relation, queryPerson)
+          if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
+            bestMatch = matchScore
+          }
+        })
+        target.points += bestMatch
+      })
     })
 
     const orderedData = matchRelationships(unorderedData, relationships).sort(
