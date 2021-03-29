@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div
+  className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4"
+>
+  <div
+    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 MuiGrid-grid-lg-3"
+  >
+    <div
+      className="MuiPaper-root makeStyles-paper-12 makeStyles-fixedHeight-13 MuiPaper-elevation1 MuiPaper-rounded"
+    >
+      <h2
+        className="MuiTypography-root MuiTypography-h6 MuiTypography-colorPrimary MuiTypography-gutterBottom"
+      >
+        1901
+      </h2>
+      <p
+        className="MuiTypography-root MuiTypography-h4"
+      >
+        Loading...
+      </p>
+      <p
+        className="MuiTypography-root makeStyles-depositContext-14 MuiTypography-body1 MuiTypography-colorTextSecondary"
+      >
+        people found in
+      </p>
+      <p
+        className="MuiTypography-root MuiTypography-h4"
+      >
+        Loading...
+      </p>
+      <p
+        className="MuiTypography-root makeStyles-depositContext-14 MuiTypography-body1 MuiTypography-colorTextSecondary"
+      >
+        households
+      </p>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 MuiGrid-grid-lg-3"
+  >
+    <div
+      className="MuiPaper-root makeStyles-paper-12 makeStyles-fixedHeight-13 MuiPaper-elevation1 MuiPaper-rounded"
+    >
+      <h2
+        className="MuiTypography-root MuiTypography-h6 MuiTypography-colorPrimary MuiTypography-gutterBottom"
+      >
+        1911
+      </h2>
+      <p
+        className="MuiTypography-root MuiTypography-h4"
+      >
+        Loading...
+      </p>
+      <p
+        className="MuiTypography-root makeStyles-depositContext-14 MuiTypography-body1 MuiTypography-colorTextSecondary"
+      >
+        people found in
+      </p>
+      <p
+        className="MuiTypography-root MuiTypography-h4"
+      >
+        Loading...
+      </p>
+      <p
+        className="MuiTypography-root makeStyles-depositContext-14 MuiTypography-body1 MuiTypography-colorTextSecondary"
+      >
+        households
+      </p>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+  >
+    <div
+      className="MuiPaper-root makeStyles-paper-12 MuiPaper-elevation1 MuiPaper-rounded"
+    >
+      <p>
+        Loading
+      </p>
+    </div>
+  </div>
+</div>
+`;
