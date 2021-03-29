@@ -44,7 +44,7 @@ const matchRelationships = (data, relationships) => {
     const countObject = {
       points:
         relationships.reduce((a, c) => a + nameArray.includes(c), 0) *
-        RELATIONSHIP_VALUE,
+        (RELATIONSHIP_VALUE / 2), //TODO debug why rels are doubled
     }
     unorderedData.push(Object.assign(countObject, family))
   })
@@ -57,39 +57,33 @@ const orderData = (data, relationships, family) => {
     const unorderedData = matchRelationships(data, relationships)
 
     unorderedData.forEach((target) => {
-      let bestMatch = 0
       family.forEach((queryPerson) => {
+        let bestMatch = 0
         let matchScore = match(target, queryPerson)
         if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
           bestMatch = matchScore
         }
-      })
-      target.points += bestMatch
-      target.related_from.forEach((relation) => {
-        bestMatch = 0
-        family.forEach((queryPerson) => {
-          let matchScore = match(relation, queryPerson)
-          if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
-            bestMatch = matchScore
-          }
+        target.related_from.forEach((relation) => {
+          family.forEach((queryPerson) => {
+            let matchScore = match(relation, queryPerson)
+            if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
+              bestMatch = matchScore
+            }
+          })
         })
-        target.points += bestMatch
-      })
-      target.related_to.forEach((relation) => {
-        bestMatch = 0
-        family.forEach((queryPerson) => {
-          let matchScore = match(relation, queryPerson)
-          if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
-            bestMatch = matchScore
-          }
+        target.related_to.forEach((relation) => {
+          family.forEach((queryPerson) => {
+            let matchScore = match(relation, queryPerson)
+            if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
+              bestMatch = matchScore
+            }
+          })
         })
         target.points += bestMatch
       })
     })
 
-    const orderedData = matchRelationships(unorderedData, relationships).sort(
-      (a, b) => a.points - b.points
-    )
+    const orderedData = unorderedData.sort((a, b) => a.points - b.points)
 
     return {
       Person: orderedData.reverse(),
