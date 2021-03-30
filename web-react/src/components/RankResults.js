@@ -64,20 +64,16 @@ const orderData = (data, relationships, family) => {
           bestMatch = matchScore
         }
         target.related_from.forEach((relation) => {
-          family.forEach((queryPerson) => {
-            let matchScore = match(relation, queryPerson)
-            if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
-              bestMatch = matchScore
-            }
-          })
+          let matchScore = match(relation, queryPerson)
+          if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
+            bestMatch = matchScore
+          }
         })
         target.related_to.forEach((relation) => {
-          family.forEach((queryPerson) => {
-            let matchScore = match(relation, queryPerson)
-            if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
-              bestMatch = matchScore
-            }
-          })
+          let matchScore = match(relation, queryPerson)
+          if (matchScore > bestMatch && matchScore > MATCHING_THRESHOLD) {
+            bestMatch = matchScore
+          }
         })
         target.points += bestMatch
       })
