@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import neo4j from 'neo4j-driver/lib/browser/neo4j-web'
-import ForceGraphDisplay from './ForceGraphDisplay'
-import { MatchPerson } from './MatchPerson'
+import ForceGraphDisplay from '../ForceGraphDisplay/ForceGraphDisplay'
+import { MatchPerson } from '../MatchPerson'
 
 export default function Visualisation(props) {
   const { household, comparison, title } = props

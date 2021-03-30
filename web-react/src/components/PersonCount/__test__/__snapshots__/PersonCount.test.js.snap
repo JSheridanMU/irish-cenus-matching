@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+Array [
+  <h2
+    className="MuiTypography-root MuiTypography-h6 MuiTypography-colorPrimary MuiTypography-gutterBottom"
+  >
+    1901
+  </h2>,
+  <p
+    className="MuiTypography-root MuiTypography-h4"
+  >
+    Loading...
+  </p>,
+  <p
+    className="MuiTypography-root makeStyles-depositContext-5 MuiTypography-body1 MuiTypography-colorTextSecondary"
+  >
+    people found in
+  </p>,
+  <p
+    className="MuiTypography-root MuiTypography-h4"
+  >
+    Loading...
+  </p>,
+  <p
+    className="MuiTypography-root makeStyles-depositContext-5 MuiTypography-body1 MuiTypography-colorTextSecondary"
+  >
+    households
+  </p>,
+]
+`;

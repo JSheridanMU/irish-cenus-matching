@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import { useTheme } from '@material-ui/core/styles'
 import { Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import Title from './Title'
+import Title from '../Title/Title'
 import clsx from 'clsx'
-
-import SearchResults from './SearchResults'
-import { UseSearch, Form } from './UseSearch'
-import FieldImporter from './form-fields/FieldImporter'
-import * as DataService from '../services/DataService'
+import SearchResults from '../SearchResults/SearchResults'
+import { UseSearch, Form } from '../UseSearch'
+import FieldImporter from '../form-fields/FieldImporter'
+import * as DataService from '../../services/DataService'
 
 const initialValues = {
   year: '1911',

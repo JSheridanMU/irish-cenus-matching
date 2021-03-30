@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery, gql } from '@apollo/client'
-import ResultsTable from './ResultsTable'
-import { RankResults } from './RankResults'
+import ResultsTable from '../ResultsTable/ResultsTable'
+import { RankResults } from '../RankResults'
 import { Box, CircularProgress } from '@material-ui/core'
 
 const GET_HOUSEHOLD = gql`

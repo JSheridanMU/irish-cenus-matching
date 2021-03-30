@@ -5,7 +5,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { useQuery, gql } from '@apollo/client'
-import Title from './Title'
+import Title from '../Title/Title'
 
 const GET_PERSON_DATA_QUERY = gql`
   {

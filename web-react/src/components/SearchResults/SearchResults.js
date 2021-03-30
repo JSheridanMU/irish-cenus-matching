@@ -3,11 +3,11 @@ import { useTheme } from '@material-ui/core/styles'
 import { Grid, Paper, Box, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
-import Title from './Title'
+import Title from '../Title/Title'
 import { useQuery, gql } from '@apollo/client'
-import ResultsTable from './ResultsTable'
-import SecondSearchResults from './SecondSearchResults'
-import { UseSecondSearch } from './UseSecondSearch'
+import ResultsTable from '../ResultsTable/ResultsTable'
+import SecondSearchResults from '../SecondSearchResults/SecondSearchResults'
+import { UseSecondSearch } from '../UseSecondSearch'
 
 const GET_HOUSEHOLD = gql`
   query getHouseholds(
@@ -159,7 +159,7 @@ export default function SearchResults(props) {
           <Paper className={fixedHeightPaper}>
             <Title>{props.values.year}</Title>
             {!data && loading && !error && (
-              <Box m="auto">
+              <Box m="auto" data-testid={'search rendered'}>
                 <CircularProgress />
               </Box>
             )}
