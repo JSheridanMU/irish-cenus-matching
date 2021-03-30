@@ -90,6 +90,7 @@ function Row(props) {
             <IconButton
               aria-label="expand row"
               size="small"
+              data-testid={row.id === '69701' ? 'dropdown' : 'ignore'}
               onClick={() => setOpen(!open)}
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

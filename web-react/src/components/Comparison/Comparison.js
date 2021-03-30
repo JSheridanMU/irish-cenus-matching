@@ -58,7 +58,7 @@ export default function Comparison(props) {
   return (
     <React.Fragment>
       <FieldImporter.Button
-        text="Open Comparisson"
+        text="Open Comparison"
         color="primary"
         onClick={handleClickOpen}
       />

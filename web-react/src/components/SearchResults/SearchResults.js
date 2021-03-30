@@ -159,7 +159,7 @@ export default function SearchResults(props) {
           <Paper className={fixedHeightPaper}>
             <Title>{props.values.year}</Title>
             {!data && loading && !error && (
-              <Box m="auto">
+              <Box m="auto" data-testid={'search rendered'}>
                 <CircularProgress />
               </Box>
             )}
