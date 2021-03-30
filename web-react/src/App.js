@@ -35,7 +35,10 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <MUILink color="inherit" href="https://grandstack.io/">
+      <MUILink
+        color="inherit"
+        href="https://github.com/JSheridanMU/irish-cenus-matching"
+      >
         Irish Census Household Matching
       </MUILink>{' '}
       {new Date().getFullYear()}
